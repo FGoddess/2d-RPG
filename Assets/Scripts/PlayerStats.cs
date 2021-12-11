@@ -46,6 +46,18 @@ public class PlayerStats : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            var ray = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+
+            if (ray.collider != null && ray.collider.gameObject.TryGetComponent(out Enemy enemy))
+            {
+                var spell = Instantiate(_spells[1], transform.position, Quaternion.identity);
+
+                spell.GetComponent<IceSpell>().Initialize(ray.collider.bounds.center - spell.transform.position);
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             TryChangeStat(ref _health, 10, ref _currentHealthFill, ref _maxHealth);
@@ -66,7 +78,5 @@ public class PlayerStats : MonoBehaviour
         {
             Instantiate(_spells[0], transform.position, Quaternion.identity);
         }
-
     }
-
 }

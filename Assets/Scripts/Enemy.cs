@@ -18,6 +18,17 @@ public class Enemy : MonoBehaviour
                 Die();
             }
         }
+
+        if(collision.gameObject.TryGetComponent(out IceSpell iceSpell))
+        {
+            _health -= iceSpell.Damage;
+            Destroy(iceSpell.gameObject);
+
+            if(_health <= 0)
+            {
+                Die();
+            }
+        }
     }
 
     private void Die()
