@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
         _direction = new Vector2(_moveX, _moveY);
 
         Animate(_moveX);
-        transform.Translate(_direction * Time.deltaTime * _speed);
+        transform.Translate(_direction.normalized * Time.deltaTime * _speed);
     }
 
     private void Animate(float value)

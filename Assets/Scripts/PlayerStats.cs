@@ -15,7 +15,9 @@ public class PlayerStats : MonoBehaviour
     private float _currentHealthFill;
     private float _currentManaFill;
 
-    [SerializeField] private int _lerpSpeed;
+    [SerializeField] private float _lerpSpeed;
+
+    [SerializeField] private GameObject[] _spells;
 
     private void Start()
     {
@@ -59,6 +61,12 @@ public class PlayerStats : MonoBehaviour
         {
             _manaImage.fillAmount = Mathf.Lerp(_manaImage.fillAmount, _currentManaFill, _lerpSpeed * Time.deltaTime);
         }
+
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            Instantiate(_spells[0], transform.position, Quaternion.identity);
+        }
+
     }
 
 }
