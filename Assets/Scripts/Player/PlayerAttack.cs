@@ -12,6 +12,7 @@ public class PlayerAttack : MonoBehaviour
     private Coroutine _attackRoutine;
 
     [SerializeField] private float _attackDelay;
+    [SerializeField] private GameObject _attackSpell;
 
     private void Awake()
     {
@@ -25,9 +26,18 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F) && _attackRoutine == null)
+        if (Input.GetMouseButtonDown(0) && _attackRoutine == null)
         {
-            _attackRoutine = StartCoroutine(Attack());
+            var ray = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+
+            if (ray.collider != null && ray.collider.gameObject.TryGetComponent(out Enemy enemy))
+            {
+                _attackRoutine = StartCoroutine(Attack());
+
+                var spell = Instantiate(_attackSpell, transform.position, Quaternion.identity);
+
+                //spell.GetComponent<IceSpell>().Initialize(ray.collider.bounds.center - spell.transform.position);
+            }
         }
     }
 

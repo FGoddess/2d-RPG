@@ -20,11 +20,6 @@ public class Spell : MonoBehaviour
         {
             _direction = enemy.bounds.center - transform.position;
         }
-        else
-        {
-            Debug.Log("0 enemies");
-            //Destroy(gameObject);
-        }
     }
 
     private void FixedUpdate()
