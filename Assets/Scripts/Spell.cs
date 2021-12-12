@@ -1,18 +1,19 @@
+using System.Collections;
 using UnityEngine;
 
 public class Spell : MonoBehaviour
 {
-    [SerializeField] private LayerMask _layerMask;
-    [SerializeField] private float _speed;
-    [SerializeField] private float _radius;
+    [SerializeField] protected LayerMask _layerMask;
+    [SerializeField] protected float _speed;
+    [SerializeField] protected float _radius;
 
-    [SerializeField] private float _damage = 10;
+    [SerializeField] protected float _damage = 10;
 
     public float Damage => _damage;
 
-    private Vector2 _direction = Vector2.zero;
+    protected Vector2 _direction = Vector2.zero;
 
-    private void Start()
+    protected virtual void Start()
     {
         var enemy = Physics2D.OverlapCircle(transform.position, _radius, _layerMask);
 
@@ -22,7 +23,7 @@ public class Spell : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         if(_direction != Vector2.zero)
         {
@@ -30,9 +31,15 @@ public class Spell : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _radius);
+    }
+
+    public virtual IEnumerator ApplyEffect(Enemy enemy) 
+    {
+        yield return null;
+        gameObject.SetActive(false); 
     }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1011073167001721984}
   - component: {fileID: -4608966048119340702}
   - component: {fileID: -3084056659172080730}
-  - component: {fileID: 2843021401661498251}
+  - component: {fileID: -4225357579893993452}
   m_Layer: 0
   m_Name: Poison
   m_TagString: Untagged
@@ -122,7 +122,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.42666668
---- !u!114 &2843021401661498251
+--- !u!114 &-4225357579893993452
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -131,12 +131,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8965599103197638183}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8b1ae0ca2e8ce84682f8f10cdf82fe6, type: 3}
+  m_Script: {fileID: 11500000, guid: c32bb636b5f757b429a8d5e462dfae1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _layerMask:
     serializedVersion: 2
     m_Bits: 128
-  _speed: 7
+  _speed: 8
   _radius: 10
   _damage: 2
+  _poisonDuration: 4

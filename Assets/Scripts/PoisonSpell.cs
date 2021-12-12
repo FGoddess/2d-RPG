@@ -1,11 +1,12 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class IceSpell : Spell
+public class PoisonSpell : Spell
 {
-    [SerializeField] private float _freezeDuration = 4f;
+    [SerializeField] private float _poisonDuration = 4f;
 
-    public float FreezeDuration => _freezeDuration;
+    public float PoisonDuration => _poisonDuration;
 
     protected override void FixedUpdate()
     {
@@ -24,8 +25,8 @@ public class IceSpell : Spell
 
     public override IEnumerator ApplyEffect(Enemy enemy)
     {
-        enemy.GetComponent<SpriteRenderer>().color = Color.blue;
-        yield return new WaitForSeconds(_freezeDuration);
+        enemy.GetComponent<SpriteRenderer>().color = Color.green;
+        yield return new WaitForSeconds(_poisonDuration);
         enemy.GetComponent<SpriteRenderer>().color = Color.white;
         Destroy(gameObject);
     }
