@@ -140,4 +140,6 @@ MonoBehaviour:
   _speed: 8
   _radius: 10
   _damage: 2
-  _poisonDuration: 4
+  _color: {r: 0.12941177, g: 1, b: 0, a: 1}
+  _poisonDuration: 6
+  _poisonTicks: 3

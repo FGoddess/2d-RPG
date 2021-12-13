@@ -4,12 +4,14 @@ using UnityEngine;
 public class Spell : MonoBehaviour
 {
     [SerializeField] protected LayerMask _layerMask;
+
     [SerializeField] protected float _speed;
     [SerializeField] protected float _radius;
-
-    [SerializeField] protected float _damage = 10;
+    [SerializeField] protected int _damage = 10;
+    [SerializeField] protected Color _color;
 
     public float Damage => _damage;
+    public Color Color => _color;
 
     protected Vector2 _direction = Vector2.zero;
 
@@ -39,7 +41,7 @@ public class Spell : MonoBehaviour
 
     public virtual IEnumerator ApplyEffect(Enemy enemy) 
     {
+        enemy.TakeDamage(_damage);
         yield return null;
-        gameObject.SetActive(false); 
     }
 }

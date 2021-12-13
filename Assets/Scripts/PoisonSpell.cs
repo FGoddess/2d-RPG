@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PoisonSpell : Spell
 {
-    [SerializeField] private float _poisonDuration = 4f;
+    [SerializeField] private float _poisonDuration = 6f;
+    [SerializeField] private int _poisonTicks = 3;
 
     public float PoisonDuration => _poisonDuration;
 
@@ -25,9 +26,19 @@ public class PoisonSpell : Spell
 
     public override IEnumerator ApplyEffect(Enemy enemy)
     {
-        enemy.GetComponent<SpriteRenderer>().color = Color.green;
-        yield return new WaitForSeconds(_poisonDuration);
+        enemy.GetComponent<SpriteRenderer>().color = _color;
+
+        var secondToWait = _poisonDuration / _poisonTicks;
+        int counter = 0;
+
+        while(counter < _poisonTicks)
+        {
+            yield return new WaitForSeconds(secondToWait);
+            enemy.TakeDamage(_damage);
+            counter++;
+        }
+
+        yield return new WaitForSeconds(0.5f);
         enemy.GetComponent<SpriteRenderer>().color = Color.white;
-        Destroy(gameObject);
     }
 }

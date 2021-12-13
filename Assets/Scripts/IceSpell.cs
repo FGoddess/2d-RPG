@@ -24,9 +24,9 @@ public class IceSpell : Spell
 
     public override IEnumerator ApplyEffect(Enemy enemy)
     {
-        enemy.GetComponent<SpriteRenderer>().color = Color.blue;
+        enemy.GetComponent<SpriteRenderer>().color = _color;
+        enemy.TakeDamage(_damage);
         yield return new WaitForSeconds(_freezeDuration);
         enemy.GetComponent<SpriteRenderer>().color = Color.white;
-        Destroy(gameObject);
     }
 }

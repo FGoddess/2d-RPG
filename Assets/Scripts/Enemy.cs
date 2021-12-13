@@ -11,14 +11,13 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Spell spell))
         {
-            _health -= spell.Damage;
             if(_coroutine != null)
             {
                 StopCoroutine(_coroutine);
             }
 
             _coroutine = StartCoroutine(spell.ApplyEffect(this));
-
+            spell.gameObject.SetActive(false);
             if (_health <= 0)
             {
                 Die();
@@ -29,5 +28,10 @@ public class Enemy : MonoBehaviour
     private void Die()
     {
         Destroy(gameObject);
+    }
+
+    public void TakeDamage(int value)
+    {
+        _health -= value;
     }
 }

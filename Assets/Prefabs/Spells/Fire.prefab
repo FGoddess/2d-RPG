@@ -140,3 +140,4 @@ MonoBehaviour:
   _speed: 5
   _radius: 10
   _damage: 20
+  _color: {r: 1, g: 0.3254902, b: 0, a: 0.54509807}
