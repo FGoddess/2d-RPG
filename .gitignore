@@ -39,3 +39,4 @@ sysinfo.txt
 *.unitypackage
 *.log
 Logs/Packages-Update.log
+Logs/AssetImportWorker0.log
