@@ -40,3 +40,4 @@ sysinfo.txt
 *.log
 Logs/Packages-Update.log
 Logs/AssetImportWorker0.log
+Logs/AssetImportWorker0.log
