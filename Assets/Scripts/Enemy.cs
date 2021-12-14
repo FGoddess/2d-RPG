@@ -10,10 +10,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Image _healthBar;
     [SerializeField] private float _timeToChangeHealth = 1f;
 
-    private Coroutine _coroutine;
+    private Coroutine _effectCoroutine;
     private Coroutine _healthCoroutine;
-
-    private float _lerpValue;
 
     private void Start()
     {
@@ -24,17 +22,13 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Spell spell))
         {
-            if(_coroutine != null)
+            if(_effectCoroutine != null)
             {
-                StopCoroutine(_coroutine);
+                StopCoroutine(_effectCoroutine);
             }
 
-            _coroutine = StartCoroutine(spell.ApplyEffect(this));
+            _effectCoroutine = StartCoroutine(spell.ApplyEffect(this));
             spell.gameObject.SetActive(false);
-            if (_health <= 0)
-            {
-                Die();
-            }
         }
     }
 
@@ -68,6 +62,11 @@ public class Enemy : MonoBehaviour
             timer += Time.deltaTime;
 
             yield return null;
+        }
+
+        if (_health <= 0)
+        {
+            Die();
         }
     }
 }
