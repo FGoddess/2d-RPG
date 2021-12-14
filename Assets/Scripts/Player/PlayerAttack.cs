@@ -7,7 +7,6 @@ public class PlayerAttack : MonoBehaviour
 
     private readonly string _attackLayerName = "Attack";
     private int _attackLayerIndex;
-    private bool _isAtacking;
 
     private Coroutine _attackRoutine;
 
@@ -34,9 +33,7 @@ public class PlayerAttack : MonoBehaviour
             {
                 _attackRoutine = StartCoroutine(Attack());
 
-                var spell = Instantiate(_attackSpell, transform.position, Quaternion.identity);
-
-                //spell.GetComponent<IceSpell>().Initialize(ray.collider.bounds.center - spell.transform.position);
+                Instantiate(_attackSpell, transform.position, Quaternion.identity);
             }
         }
     }

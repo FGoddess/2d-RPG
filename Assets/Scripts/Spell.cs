@@ -10,18 +10,42 @@ public class Spell : MonoBehaviour
     [SerializeField] protected int _damage = 10;
     [SerializeField] protected Color _color;
 
+    [SerializeField] protected bool _isLeft;
+
     public float Damage => _damage;
     public Color Color => _color;
 
-    protected Vector2 _direction = Vector2.zero;
+    protected Vector2 _direction;
+
+    public bool IsLeft { set => _isLeft = value; }
 
     protected virtual void Start()
     {
-        var enemy = Physics2D.OverlapCircle(transform.position, _radius, _layerMask);
+        var enemies = Physics2D.OverlapCircleAll(transform.position, _radius, _layerMask);
 
-        if (enemy != null)
+        if (enemies.Length == 1)
         {
-            _direction = enemy.bounds.center - transform.position;
+            _direction = enemies[0].bounds.center - transform.position;
+        }
+        else if (enemies.Length > 1)
+        {
+            var minLenght = 1000f;
+            var nearestEnemy = enemies[0];
+
+            foreach(var enemy in enemies)
+            {
+                if(Vector3.Distance(transform.position, enemy.transform.position) < minLenght)
+                {
+                    nearestEnemy = enemy;
+                    minLenght = Vector3.Distance(transform.position, enemy.transform.position);
+                }
+            }
+
+            _direction = nearestEnemy.bounds.center - transform.position;
+        }
+        else
+        {
+            _direction = _isLeft ? Vector2.left : Vector2.right;
         }
     }
 

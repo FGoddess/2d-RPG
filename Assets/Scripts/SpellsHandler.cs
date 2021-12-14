@@ -14,7 +14,7 @@ public class SpellsHandler : MonoBehaviour
 
     [SerializeField] private float _castTime;
 
-    [SerializeField] private Transform _player;
+    [SerializeField] private PlayerMovement _player;
 
     private Coroutine _coroutine;
 
@@ -31,11 +31,11 @@ public class SpellsHandler : MonoBehaviour
             _progressBar.color = _spells[spellIndex].Color;
             _spellBar.gameObject.SetActive(true);
 
-            _coroutine = StartCoroutine(Delay(_spells[spellIndex]));
+            _coroutine = StartCoroutine(StartCasting(_spells[spellIndex]));
         }
     }
 
-    private IEnumerator Delay(Spell spell)
+    private IEnumerator StartCasting(Spell spell)
     {
         float timer = 0f;
 
@@ -49,6 +49,7 @@ public class SpellsHandler : MonoBehaviour
         }
 
         _spellBar.gameObject.SetActive(false);
+        spell.IsLeft = _player.IsFliped;
         Instantiate(spell, _player.transform.position, Quaternion.identity);
         _coroutine = null;
     }
