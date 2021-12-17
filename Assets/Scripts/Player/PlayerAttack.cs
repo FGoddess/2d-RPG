@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -13,9 +14,26 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float _attackDelay;
     [SerializeField] private GameObject _attackSpell;
 
+    private bool _isCasting;
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+    }
+
+    private void OnEnable()
+    {
+        SpellsHandler.SpellCasted += OnSpellCasting;
+    }
+
+    private void OnDisable()
+    {
+        SpellsHandler.SpellCasted -= OnSpellCasting;
+    }
+
+    private void OnSpellCasting(bool value)
+    {
+        _isCasting = value;
     }
 
     private void Start()
@@ -25,7 +43,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && _attackRoutine == null)
+        if (Input.GetMouseButtonDown(0) && !_isCasting && _attackRoutine == null)
         {
             var ray = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
 

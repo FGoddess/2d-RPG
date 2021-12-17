@@ -1,12 +1,13 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerStats : MonoBehaviour
 {
-    private int _health;
+    [SerializeField] private int _health;
     [SerializeField] private int _maxHealth;
 
-    private int _mana; 
+    [SerializeField] private int _mana; 
     [SerializeField] private int _maxMana;
 
     [SerializeField] private Image _healthImage;
@@ -32,21 +33,23 @@ public class PlayerStats : MonoBehaviour
         if(stat < 0)
         {
             stat = 0;
+            return;
         }
 
         if(stat > maxStat)
         {
             stat = maxStat;
+            return;
         }
 
         statFill = (float)stat / maxStat;
+        
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            TryChangeStat(ref _health, 10, ref _currentHealthFill, ref _maxHealth);
             TryChangeStat(ref _mana, 20, ref _currentManaFill, ref _maxMana);
         }
 
@@ -59,5 +62,10 @@ public class PlayerStats : MonoBehaviour
         {
             _manaImage.fillAmount = Mathf.Lerp(_manaImage.fillAmount, _currentManaFill, _lerpSpeed * Time.deltaTime);
         }
+    }
+
+    public void TakeDamage(int value)
+    {
+        TryChangeStat(ref _health, value, ref _currentHealthFill, ref _maxHealth);
     }
 }
