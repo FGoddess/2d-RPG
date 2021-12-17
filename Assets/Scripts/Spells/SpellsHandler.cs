@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class SpellsHandler : MonoBehaviour
 {
@@ -14,7 +15,8 @@ public class SpellsHandler : MonoBehaviour
 
     [SerializeField] private float _castTime;
 
-    [SerializeField] private PlayerMovement _player;
+    [SerializeField] private PlayerMovement _playerMover;
+    public static event Action<bool> SpellCasted;
 
     private Coroutine _coroutine;
 
@@ -37,6 +39,8 @@ public class SpellsHandler : MonoBehaviour
 
     private IEnumerator StartCasting(Spell spell)
     {
+        SpellCasted?.Invoke(true);
+
         float timer = 0f;
 
         while(timer < _castTime)
@@ -49,8 +53,9 @@ public class SpellsHandler : MonoBehaviour
         }
 
         _spellBar.gameObject.SetActive(false);
-        spell.IsLeft = _player.IsFliped;
-        Instantiate(spell, _player.transform.position, Quaternion.identity);
+        spell.IsLeft = _playerMover.IsFliped;
+        Instantiate(spell, _playerMover.transform.position, Quaternion.identity);
+        SpellCasted?.Invoke(false);
         _coroutine = null;
     }
 }
