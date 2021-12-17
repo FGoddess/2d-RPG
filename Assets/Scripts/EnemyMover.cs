@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyMover : MonoBehaviour
@@ -9,35 +8,41 @@ public class EnemyMover : MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private float _radius;
 
-    protected Vector2 _direction;
+    [SerializeField] private float _attackRange;
 
     private Collider2D _target;
 
     private bool _isAttacking;
 
-    private void Start()
+    private void FixedUpdate()
     {
-        _target = Physics2D.OverlapCircle(transform.position, _radius, _layerMask);
+        if (_target == null)
+        {
+            _target = Physics2D.OverlapCircle(transform.position, _radius, _layerMask);
+        }
     }
 
-    // Update is called once per frame
     private void Update()
     {
-        if(_target != null && !_isAttacking)
+        if (_target != null && !_isAttacking)
         {
-            Vector2 direction = _target.bounds.ClosestPoint(transform.position) - transform.position;
+            Vector2 closestPoint = _target.bounds.ClosestPoint(transform.position);
+            Vector2 direction = closestPoint - (Vector2)transform.position;
             transform.Translate(direction.normalized * _speed * Time.deltaTime);
-        }
-    }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.gameObject.TryGetComponent(out PlayerStats player))
-        {
-            Debug.Log("da");
-            _isAttacking = true;
-            StartCoroutine(AttackRoutine(player));
+            if (Vector2.Distance(transform.position, closestPoint) < _attackRange)
+            {
+                _isAttacking = true;
+                _target.TryGetComponent(out PlayerStats player);
+                StartCoroutine(AttackRoutine(player));
+            }
         }
+
+        if (_isAttacking && Vector2.Distance(transform.position, _target.bounds.ClosestPoint(transform.position)) > _attackRange)
+        {
+            _isAttacking = false;
+        }
+
     }
 
     private IEnumerator AttackRoutine(PlayerStats player)

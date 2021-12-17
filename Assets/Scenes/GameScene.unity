@@ -2769,6 +2769,7 @@ MonoBehaviour:
     m_Bits: 256
   _speed: 2
   _radius: 50
+  _attackRange: 2
 --- !u!1001 &6125329990822343207
 PrefabInstance:
   m_ObjectHideFlags: 0
